@@ -5,9 +5,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _moveSpeed = 5f;
     [SerializeField] private float _jumpForce = 15f;
 
-    private SpriteRenderer _spriteRenderer;
     private BoxCollider2D _boxCollider2D;
     private Rigidbody2D _rigidbody;
+    public SpriteRenderer _spriteRenderer;
     public float _HorizontalAxis;
     public LayerMask groundLayer;
 

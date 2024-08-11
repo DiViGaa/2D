@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class PlayerParamaters : AbstractCharacterParameters
 {
     private PlayerAnimator playerAnimator;

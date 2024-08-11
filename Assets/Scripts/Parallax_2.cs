@@ -2,15 +2,16 @@ using UnityEngine;
 
 public class Parallax_2 : MonoBehaviour
 {
-    [SerializeField] private GameObject _camera;
     [SerializeField] private float parallaxEffect;
+    [SerializeField] private GameObject _camera;
 
-    private float lenght, _startPos;
+    private float _startPos;
+    private float lenght;
 
     private void Start()
     {
-        _startPos = transform.position.x;
         lenght = GetComponent<SpriteRenderer>().bounds.size.x;
+        _startPos = transform.position.x;
     }
 
     private void FixedUpdate()

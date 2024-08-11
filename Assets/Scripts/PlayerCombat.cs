@@ -4,7 +4,7 @@ public class PlayerCombat : MonoBehaviour
 {
     [SerializeField] private float _attackRange = 0.5f;
     [SerializeField] private Transform _attackPoint;
-    [SerializeField] private LayerMask enemyLayer;
+    [SerializeField] private LayerMask _enemyLayer;
     [SerializeField] private float _damage = 15;
 
     private PlayerAnimator _playerAnimator;
@@ -32,7 +32,7 @@ public class PlayerCombat : MonoBehaviour
         {
             _nextAttackTime = Time.time + 1f / _attackRate;
             _playerAnimator.AttackAnimation();
-            Collider2D[] hitEnemys = Physics2D.OverlapCircleAll(_attackPoint.position, _attackRange, enemyLayer);
+            Collider2D[] hitEnemys = Physics2D.OverlapCircleAll(_attackPoint.position, _attackRange, _enemyLayer);
             foreach (var enemy in hitEnemys)
             {
                 enemy.GetComponent<EnemyParameters>().TakeDamage(_damage);

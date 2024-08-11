@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class ChaceAndPatrol : StateMachineBehaviour
@@ -8,10 +7,11 @@ public class ChaceAndPatrol : StateMachineBehaviour
     [SerializeField] private float _movementSpeed = 1.5f;
     [SerializeField] private float _attackDistance = 2f;
     
-    private List<Transform> points = new List<Transform>();
+    private List<Transform> points;
     private Rigidbody2D _rigidbody;
     private Transform targetPoint;
     private Transform _player;
+    private Transform targetToMove;
 
     public SpriteRenderer _spriteRenderer;
 
@@ -26,19 +26,18 @@ public class ChaceAndPatrol : StateMachineBehaviour
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Transform targetToMove;
 
         MoveToTarget(targetPoint);
-
         targetToMove = targetPoint;
+        
+        var distanceToPlayer = DistanceToTarget(animator, _player);
 
         if (DistanceToTarget(animator, targetPoint) <= 1) 
         {
+
             animator.SetBool("MoveOrChase", false);
             animator.SetBool("Wait", true);
         }
-
-        var distanceToPlayer = DistanceToTarget(animator, _player);
 
         if (distanceToPlayer <= _distanceToChase)
         {

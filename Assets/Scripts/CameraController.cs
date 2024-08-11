@@ -2,8 +2,13 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] private Transform _player;
+    private Transform _player;
     private Vector3 _position;
+
+    private void Start()
+    {
+        _player = GameObject.FindGameObjectWithTag("Player").transform;
+    }
 
     private void Update()
     {

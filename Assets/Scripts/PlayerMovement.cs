@@ -5,6 +5,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _moveSpeed = 5f;
     [SerializeField] private float _jumpForce = 15f;
 
+    private PlayerAnimator _playerAnimator;
     private BoxCollider2D _boxCollider2D;
     private Rigidbody2D _rigidbody;
     public SpriteRenderer _spriteRenderer;
@@ -16,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _rigidbody = GetComponent<Rigidbody2D>();
         _boxCollider2D = GetComponent<BoxCollider2D>();
+        _playerAnimator = GetComponent<PlayerAnimator>();
     }
 
     private void Update()
@@ -43,7 +45,10 @@ public class PlayerMovement : MonoBehaviour
     private void Jump()
     {
         if (Input.GetButtonDown("Jump") && IsGrounded())
+        {
             _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _jumpForce);
+            _playerAnimator.JumpAnimation();
+        }
     }
 
     private void Flip()

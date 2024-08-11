@@ -5,20 +5,6 @@ public class PlayerAnimator : MonoBehaviour
     [SerializeField] private Animator _animator;
     [SerializeField] private PlayerMovement _playerMovement;
 
-    private void OnEnable()
-    {
-        Events.gameOver += DeathAnimation;
-        Events.attackButtonIsPressed += Attack;
-        Events.playerTakeHit += TakeHit;
-    }
-
-    private void OnDisable()
-    {
-        Events.gameOver -= DeathAnimation;
-        Events.attackButtonIsPressed -= Attack;
-        Events.playerTakeHit -= TakeHit;
-
-    }
     private void Start()
     {
         _animator = GetComponent<Animator>();
@@ -28,7 +14,6 @@ public class PlayerAnimator : MonoBehaviour
     private void Update()
     {
         Move();
-        Jump();
         isGrounded();
     }
 
@@ -45,31 +30,27 @@ public class PlayerAnimator : MonoBehaviour
         }
     }
 
-    private void Jump()
-    {
-        if (Input.GetButtonDown("Jump"))
-        {
-            _animator.SetTrigger("Jump");
-        }
+    public void JumpAnimation()
+    { 
+        _animator.SetTrigger("Jump");
     }
 
-    private void isGrounded()
-    {
-        _animator.SetBool("isGrounded", _playerMovement.IsGrounded());
-    }
-
-    private void Attack()
+    public void AttackAnimation()
     {
         _animator.SetTrigger("Attack");
     }
 
-    private void DeathAnimation()
+    public void DeathAnimation()
     {
         _animator.SetTrigger("Death");
     }
 
-    private void TakeHit()
+    public void TakeHitAnimation()
     {
         _animator.SetTrigger("Hit");
+    }
+    private void isGrounded()
+    {
+        _animator.SetBool("isGrounded", _playerMovement.IsGrounded());
     }
 }

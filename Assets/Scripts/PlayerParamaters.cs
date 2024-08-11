@@ -1,5 +1,11 @@
 public class PlayerParamaters : AbstractCharacterParameters
 {
+    private PlayerAnimator playerAnimator;
+
+    private void Start()
+    {
+        playerAnimator = GetComponent<PlayerAnimator>();
+    }
     private void Update()
     {
         CheckHP();
@@ -9,13 +15,13 @@ public class PlayerParamaters : AbstractCharacterParameters
     {
         if (HP <= 0)
         {
-            Events.gameOver?.Invoke();
+            playerAnimator.DeathAnimation();
         }
     }
 
     public override void TakeDamage(float damage)
     {
         HP -= damage;
-        Events.playerTakeHit?.Invoke();
+        playerAnimator.TakeHitAnimation();
     }
 }

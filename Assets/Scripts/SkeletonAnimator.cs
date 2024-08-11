@@ -8,25 +8,13 @@ public class SkeletonAnimator : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
     }
-    private void OnEnable()
-    {
-        Events.SkeletonTakeHit += TakeHit;
-        Events.SkeletonDeath += DeathAnimation;
-    }
 
-    private void OnDisable()
-    {
-        Events.SkeletonTakeHit -= TakeHit;
-        Events.SkeletonDeath -= DeathAnimation;
-
-    }
-
-    private void DeathAnimation()
+    public void DeathAnimation()
     {
         _animator.SetTrigger("Death");
     }
 
-    private void TakeHit()
+    public void TakeHitAnimation()
     {
         _animator.SetTrigger("Hit");
     }

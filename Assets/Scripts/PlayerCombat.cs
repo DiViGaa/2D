@@ -2,18 +2,21 @@ using UnityEngine;
 
 public class PlayerCombat : MonoBehaviour
 {
-    [SerializeField] private PlayerMovement _playerMovement;
-    [SerializeField] private Transform _attackPoint;
     [SerializeField] private float _attackRange = 0.5f;
+    [SerializeField] private Transform _attackPoint;
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private float _damage = 15;
-    private float _attackRate = 2f;
-    private float _nextAttackTime = 0f;
+
+    private PlayerAnimator _playerAnimator;
+    private PlayerMovement _playerMovement;
     private  Vector2 _attackPointPosition;
+    private float _nextAttackTime = 0f;
+    private float _attackRate = 2f;
 
     void Start()
     {
         _playerMovement = GetComponentInChildren<PlayerMovement>();
+        _playerAnimator = GetComponent<PlayerAnimator>();
         _attackPointPosition = _attackPoint.localPosition;
     }
 
@@ -28,7 +31,7 @@ public class PlayerCombat : MonoBehaviour
         if (CanAttack())
         {
             _nextAttackTime = Time.time + 1f / _attackRate;
-            Events.attackButtonIsPressed?.Invoke();
+            _playerAnimator.AttackAnimation();
             Collider2D[] hitEnemys = Physics2D.OverlapCircleAll(_attackPoint.position, _attackRange, enemyLayer);
             foreach (var enemy in hitEnemys)
             {

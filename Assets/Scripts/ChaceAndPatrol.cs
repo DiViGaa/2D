@@ -9,7 +9,7 @@ public class ChaceAndPatrol : StateMachineBehaviour
     
     private List<Transform> points;
     private Rigidbody2D _rigidbody;
-    private Transform targetPoint;
+    private Transform _patrolPoint;
     private Transform _player;
     private Transform targetToMove;
 
@@ -21,18 +21,18 @@ public class ChaceAndPatrol : StateMachineBehaviour
         _rigidbody = animator.GetComponent<Rigidbody2D>();
         _spriteRenderer = animator.GetComponent<SpriteRenderer>();
         points = animator.GetComponent<EnemyPatrolPoints>().points;
-        targetPoint = points[Random.Range(0, points.Count)];
+        _patrolPoint = points[Random.Range(0, points.Count)];
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
 
-        MoveToTarget(targetPoint);
-        targetToMove = targetPoint;
+        MoveToTarget(_patrolPoint);
+        targetToMove = _patrolPoint;
         
         var distanceToPlayer = DistanceToTarget(animator, _player);
 
-        if (DistanceToTarget(animator, targetPoint) <= 1) 
+        if (DistanceToTarget(animator, _patrolPoint) <= 1) 
         {
 
             animator.SetBool("MoveOrChase", false);
@@ -73,12 +73,9 @@ public class ChaceAndPatrol : StateMachineBehaviour
     private void Flip(Animator animator, Transform target) 
     {
         if (animator.transform.position.x > target.position.x) 
-        {
             _spriteRenderer.flipX = true;
-        }
+
         else if(animator.transform.position.x < target.position.x)
-        {
             _spriteRenderer.flipX = false;
-        }
     }
 }

@@ -2,7 +2,11 @@ using UnityEngine;
 
 public class PlayerParamaters : AbstractCharacterParameters
 {
+    [SerializeField] private UI _ui;
+
     private PlayerAnimator playerAnimator;
+
+    public int _healingBottle = 0;
 
     private void Start()
     {
@@ -11,6 +15,7 @@ public class PlayerParamaters : AbstractCharacterParameters
     private void Update()
     {
         CheckHP();
+        RestoreHP();
     }
 
     public override void CheckHP()
@@ -25,5 +30,18 @@ public class PlayerParamaters : AbstractCharacterParameters
     {
         HP -= damage;
         playerAnimator.TakeHitAnimation();
+        _ui.UpdateHealthBar();
+    }
+
+    public void RestoreHP()
+    {
+        if (_healingBottle > 0 && Input.GetKeyDown(KeyCode.F))
+        {
+            HP += 15;
+            HP = Mathf.Clamp(HP, 0, 100);
+            _ui.UpdateHealthBar();
+            _healingBottle--;
+            _ui.UpdateHealingBottleCounter();
+        }
     }
 }

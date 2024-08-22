@@ -4,10 +4,13 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed = 5f;
     [SerializeField] private float _jumpForce = 15f;
-
+    [SerializeField] private PlayerSounds _sound;
+    
     private PlayerAnimator _playerAnimator;
     private BoxCollider2D _boxCollider2D;
     private Rigidbody2D _rigidbody;
+    private bool wasGrounded;
+
     public SpriteRenderer _spriteRenderer;
     public float _HorizontalAxis;
     public LayerMask groundLayer;
@@ -18,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody2D>();
         _boxCollider2D = GetComponent<BoxCollider2D>();
         _playerAnimator = GetComponent<PlayerAnimator>();
+        _sound = GetComponent<PlayerSounds>();
     }
 
     private void Update()
@@ -25,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
         GetAxis();
         Flip();
         Jump();
+        PlayLandingSound();
     }
 
     private void FixedUpdate()
@@ -46,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetButtonDown("Jump") && IsGrounded())
         {
+            _sound.PlayJumpSound();
             _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _jumpForce);
             _playerAnimator.JumpAnimation();
         }
@@ -55,6 +61,14 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_HorizontalAxis != 0)
             _spriteRenderer.flipX = _HorizontalAxis < 0;
+    }
+
+    private void PlayLandingSound()
+    {
+        if (IsGrounded() && !wasGrounded)
+            _sound.PlayLandingSound();
+
+        wasGrounded = IsGrounded();
     }
 
     public bool IsGrounded()

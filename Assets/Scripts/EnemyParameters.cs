@@ -3,16 +3,19 @@ using UnityEngine;
 public class EnemyParameters : AbstractCharacterParameters
 {
     private SkeletonAnimator _animator;
+    private Reward _reward;
 
     private void Start()
     {
         _animator = GetComponent<SkeletonAnimator>();
+        _reward = GetComponent<Reward>();
     }
-
-    private void Update()
+    public override void TakeDamage(float damage)
     {
+        HP -= damage;
+        _animator.TakeHitAnimation();
         CheckHP();
-    }
+    } 
 
     public override void CheckHP()
     {
@@ -21,12 +24,8 @@ public class EnemyParameters : AbstractCharacterParameters
             _animator.DeathAnimation();
             GetComponent<Rigidbody2D>().gravityScale = 0f;
             GetComponent<Collider2D>().enabled = false;
+            _reward.CreateReward();
         }
     }
 
-    public override void TakeDamage(float damage)
-    {
-        HP -= damage;
-        _animator.TakeHitAnimation();
-    } 
 }

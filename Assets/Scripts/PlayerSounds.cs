@@ -4,11 +4,10 @@ public class PlayerSounds : MonoBehaviour
 {
     [SerializeField] private AudioClip _step;
     [SerializeField] private AudioClip _jump;
-    //[SerializeField] private AudioClip _landing;
+    [SerializeField] private AudioClip _landing;
     [SerializeField] private AudioClip _damage;
     [SerializeField] private AudioClip _death;
     [SerializeField] private AudioClip _attack;
-    //[SerializeField] private AudioClip _miss;
 
     private AudioSource _audioSource;
 
@@ -26,6 +25,11 @@ public class PlayerSounds : MonoBehaviour
     public void PlayJumpSound()
     {
         _audioSource.PlayOneShot(_jump);
+    }
+
+    public void PlayLandingSound()
+    {
+        _audioSource.PlayOneShot(_landing);
     }
 
     public void PlayDamageSound()

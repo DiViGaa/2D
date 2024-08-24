@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class HealingBottle : IntaractableObjects
 {
+    [SerializeField] private AudioClip _audioClip;
     private PlayerParamaters _playerParamaters;
     private UI _healingBottleCounter;
     private AudioSource _audioSource;
@@ -10,15 +11,14 @@ public class HealingBottle : IntaractableObjects
     {
         _playerParamaters = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerParamaters>();
         _healingBottleCounter = GameObject.FindGameObjectWithTag("UI").GetComponent<UI>();
-        _audioSource = GetComponent<AudioSource>();
+        _audioSource = GetComponentInParent<AudioSource>();
     }
 
     public override void Interact()
     {
         _playerParamaters._healingBottle++;
-        Destroy(gameObject);
         _healingBottleCounter.UpdateHealingBottleCounter();
-        _audioSource.Play();
-
+        _audioSource.PlayOneShot(_audioClip);
+        Destroy(gameObject);
     }
 }

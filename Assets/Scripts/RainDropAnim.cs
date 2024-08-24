@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public class ParticleCollisionHandler : MonoBehaviour
 {
     [SerializeField] private GameObject splashPrefab;
+    [SerializeField] private GameObject _rainDropsParent;
 
     private void OnParticleCollision(GameObject other)
     {
@@ -15,7 +16,7 @@ public class ParticleCollisionHandler : MonoBehaviour
 
         for (int i = 0; i < collisionCount; i++)
         {
-            Instantiate(splashPrefab, collisionEvents[i].intersection, Quaternion.identity);
+            Instantiate(splashPrefab, collisionEvents[i].intersection, Quaternion.identity, _rainDropsParent.transform);
         }
     }
 }

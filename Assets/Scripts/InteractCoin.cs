@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class InteractCoin : IntaractableObjects
 {
+    [SerializeField] private AudioClip _audioClip;
     private PlayerCoins _playerCoins;
     private UI _coinsCounter;
     private AudioSource _audioSource;
@@ -10,14 +11,14 @@ public class InteractCoin : IntaractableObjects
     {
         _playerCoins = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCoins>();
         _coinsCounter = GameObject.FindGameObjectWithTag("UI").GetComponent<UI>();
-        _audioSource = GetComponent<AudioSource>();
+        _audioSource = GetComponentInParent<AudioSource>();
     }
-
+    
     public override void Interact()
     {
         _playerCoins._coins++;
-        Destroy(gameObject);
         _coinsCounter.UpdateCoinsCounter();
-        _audioSource.Play(); 
+        _audioSource.PlayOneShot(_audioClip);
+        Destroy(gameObject);
     }
 }

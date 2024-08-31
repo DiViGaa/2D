@@ -9,7 +9,7 @@ public class ButtonSound : MonoBehaviour
 
     private void Start()
     {
-        _audioSource = GetComponent<AudioSource>();
+        _audioSource = GetComponentInParent<AudioSource>();
     }
 
     public void PlayHoverSound()

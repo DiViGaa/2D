@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
@@ -8,8 +9,9 @@ public class CameraController : MonoBehaviour
     private void Start()
     {
         _player = GameObject.FindGameObjectWithTag("Player").transform;
+        
     }
-
+    
     private void Update()
     {
 
@@ -17,5 +19,10 @@ public class CameraController : MonoBehaviour
         _position.z = -10f;
         transform.position = Vector3.Lerp(transform.position,_position, Time.deltaTime);
 
+    }
+
+    IEnumerator dfdf()
+    {
+        return null;
     }
 }

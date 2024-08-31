@@ -32,11 +32,11 @@ public class EnemyCombat : MonoBehaviour
 
     private void ReflectionPointAttack()
     {
-        if (!_spriteRenderer.flipX)
+        if (_spriteRenderer.flipX)
         {
             _attackPoint.localPosition = -_attackPointPosition;
         }
-        else if (_spriteRenderer.flipX)
+        else if (!_spriteRenderer.flipX)
         {
             _attackPoint.localPosition = _attackPointPosition;
         }

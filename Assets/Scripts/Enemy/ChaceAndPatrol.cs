@@ -32,7 +32,7 @@ public class ChaceAndPatrol : StateMachineBehaviour
         
         var distanceToPlayer = DistanceToTarget(animator, _player);
 
-        if (DistanceToTarget(animator, _patrolPoint) <= 1) 
+        if (DistanceToTarget(animator, _patrolPoint) <= 2) 
         {
 
             animator.SetBool("MoveOrChase", false);

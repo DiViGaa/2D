@@ -15,6 +15,7 @@ public class PlayerAnimator : MonoBehaviour
     {
         Move();
         isGrounded();
+        UpdateVerticalAxis();
     }
 
     private void Move()
@@ -30,6 +31,11 @@ public class PlayerAnimator : MonoBehaviour
         }
     }
 
+    private void UpdateVerticalAxis()
+    {
+        _animator.SetFloat("Y",_playerMovement._VerticalAxis);
+    }
+
     public void JumpAnimation()
     { 
         _animator.SetTrigger("Jump");
@@ -42,13 +48,19 @@ public class PlayerAnimator : MonoBehaviour
 
     public void DeathAnimation()
     {
-        _animator.SetTrigger("Death");
+        _animator.SetBool("Death", true);
     }
 
     public void TakeHitAnimation()
     {
         _animator.SetTrigger("Hit");
     }
+
+    public void LadderAnimation(bool onLadder)
+    {
+        _animator.SetBool("OnLadder", onLadder);
+    }
+
     private void isGrounded()
     {
         _animator.SetBool("isGrounded", _playerMovement.IsGrounded());

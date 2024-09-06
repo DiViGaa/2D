@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _jumpForce = 15f;
     [SerializeField] private float _moveSpeed = 5f;
     [SerializeField] private PlayerSounds _sound;
-    
+
     private PlayerAnimator _playerAnimator;
     private BoxCollider2D _boxCollider2D;
     private Rigidbody2D _rigidbody;
@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
 
     public SpriteRenderer _spriteRenderer;
     public float _HorizontalAxis;
+    public float _VerticalAxis;
     public LayerMask ladderLayer;
     public LayerMask groundLayer;
 
@@ -30,22 +31,29 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        GetAxis();
-        Flip();
-        Jump();
-        MoveUpOnLadder();
-        CheckingLadder();
-        PlayLandingSound();
+        if (!GameOver.gameOver)
+        {
+            GetAxis();
+            Flip();
+            Jump();
+            MoveUpOnLadder();
+            CheckingLadder();
+            PlayLandingSound();
+        }
     }
 
     private void FixedUpdate()
     {
-        Movement();
+        if (!GameOver.gameOver)
+        {
+            Movement();
+        }
     }
 
     private void GetAxis()
     {
         _HorizontalAxis = Input.GetAxis("Horizontal");
+        _VerticalAxis = Input.GetAxis("Vertical");
     }
 
     private void Movement()
@@ -84,7 +92,7 @@ public class PlayerMovement : MonoBehaviour
             _rigidbody.bodyType = RigidbodyType2D.Kinematic;
             UpDownLadder();
         }
-        else 
+        else
         {
             _rigidbody.bodyType = RigidbodyType2D.Dynamic;
 
@@ -93,12 +101,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void UpDownLadder()
     {
-        _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, Input.GetAxis("Vertical") * _ladderSpeed);
+        _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _VerticalAxis * _ladderSpeed);
     }
 
     private void CheckingLadder()
     {
-        checkedLadder = Physics2D.OverlapPoint(_checkLadder.position,ladderLayer);
+        checkedLadder = Physics2D.OverlapPoint(_checkLadder.position, ladderLayer);
+        if (_VerticalAxis > 0 || _VerticalAxis < 0)
+            _playerAnimator.LadderAnimation(checkedLadder);
     }
 
     public bool IsGrounded()

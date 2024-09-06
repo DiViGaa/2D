@@ -46,4 +46,10 @@ public class EnemyCombat : MonoBehaviour
     {
         Gizmos.DrawWireSphere(_attackPoint.position, _attackRange);
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+            collision.gameObject.GetComponent<PlayerParamaters>().TakeDamage(5);
+    }
 }

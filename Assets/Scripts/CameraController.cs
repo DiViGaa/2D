@@ -14,15 +14,9 @@ public class CameraController : MonoBehaviour
     
     private void Update()
     {
-
         _position = _player.position - new Vector3(0,-4,0);
         _position.z = -10f;
         transform.position = Vector3.Lerp(transform.position,_position, Time.deltaTime);
 
-    }
-
-    IEnumerator dfdf()
-    {
-        return null;
     }
 }

@@ -5,16 +5,19 @@ public class PlayerParamaters : AbstractCharacterParameters
     [SerializeField] private UI _ui;
 
     private PlayerAnimator playerAnimator;
+    private PlayerSounds sounds;
 
     public int _healingBottle = 0;
+    public int _armor = 0;
 
     private void Start()
     {
         playerAnimator = GetComponent<PlayerAnimator>();
+        sounds = GetComponent<PlayerSounds>();
+        CheckHP();
     }
     private void Update()
     {
-        CheckHP();
         RestoreHP();
     }
 
@@ -23,14 +26,33 @@ public class PlayerParamaters : AbstractCharacterParameters
         if (HP <= 0)
         {
             playerAnimator.DeathAnimation();
+            GameOver.gameOver = true;
+            _ui.GameOverPanel();
+        }
+        else
+        {
+            GameOver.gameOver = false;
         }
     }
 
     public override void TakeDamage(float damage)
     {
-        HP -= damage;
-        playerAnimator.TakeHitAnimation();
-        _ui.UpdateHealthBar();
+        if (_armor > 0) 
+        {
+            _armor--;
+            sounds.PlayArmorHitSound();
+            _ui.UpdateArmorCounter();
+        }
+        else 
+        {
+            if(!GameOver.gameOver)
+            {
+                HP -= damage;
+                playerAnimator.TakeHitAnimation();
+                _ui.UpdateHealthBar();
+                CheckHP();
+            }
+        }
     }
 
     public void RestoreHP()
@@ -42,6 +64,7 @@ public class PlayerParamaters : AbstractCharacterParameters
             _ui.UpdateHealthBar();
             _healingBottle--;
             _ui.UpdateHealingBottleCounter();
+            sounds.PlayHealingBottleSound();
         }
     }
 }

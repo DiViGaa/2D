@@ -22,8 +22,11 @@ public class PlayerCombat : MonoBehaviour
 
     void Update()
     {
-        Attack();
-        ReflectionPointAttack();
+        if (!GameOver.gameOver)
+        {
+            Attack();
+            ReflectionPointAttack();
+        }
     }
 
     private void Attack()

@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FlyingHeadParameters : AbstractCharacterParameters
 {
-    private FlyingHeadAnimator _flyingHeadAnimator;
     [SerializeField] private DamageFlyingHead _damageFlyingHead;
+    private FlyingHeadAnimator _flyingHeadAnimator;
 
     private void Start()
     {

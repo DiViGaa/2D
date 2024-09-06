@@ -3,13 +3,13 @@ using UnityEngine;
 public class InteractCoin : IntaractableObjects
 {
     [SerializeField] private AudioClip _audioClip;
-    private PlayerCoins _playerCoins;
+    private Collectibles _playerCoins;
     private UI _coinsCounter;
     private AudioSource _audioSource;
 
     private void Start()
     {
-        _playerCoins = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerCoins>();
+        _playerCoins = GameObject.FindGameObjectWithTag("Player").GetComponent<Collectibles>();
         _coinsCounter = GameObject.FindGameObjectWithTag("UI").GetComponent<UI>();
         _audioSource = GetComponentInParent<AudioSource>();
     }

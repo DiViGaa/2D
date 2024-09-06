@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class AudioSetting : MonoBehaviour
 {
-    [SerializeField] private AudioMixerGroup mixerGroup;
+    [SerializeField] private AudioMixerGroup _mixerGroup;
     [SerializeField] private float _sliderValue;
 
     private void Start()
@@ -15,32 +15,37 @@ public class AudioSetting : MonoBehaviour
     public void ChangeMasterValue()
     {
         GetSliderValue();
-        mixerGroup.audioMixer.SetFloat("Master", _sliderValue);
+        _mixerGroup.audioMixer.SetFloat("Master", _sliderValue);
     }
 
     public void ChangeEnviromentValue()
     {
         GetSliderValue();
-        mixerGroup.audioMixer.SetFloat("Enviroments", _sliderValue);
+        _mixerGroup.audioMixer.SetFloat("Enviroments", _sliderValue);
     }
     public void ChangeMusicValue()
     {
         GetSliderValue();
-        mixerGroup.audioMixer.SetFloat("Music", _sliderValue);
+        _mixerGroup.audioMixer.SetFloat("Music", _sliderValue);
     }
     public void ChangeSystemValue()
     {
         GetSliderValue();
-        mixerGroup.audioMixer.SetFloat("System", _sliderValue);
+        _mixerGroup.audioMixer.SetFloat("System", _sliderValue);
     }
 
     public void ChangePersonValue()
     {
         GetSliderValue();
-        mixerGroup.audioMixer.SetFloat("Persons", _sliderValue);
+        _mixerGroup.audioMixer.SetFloat("Persons", _sliderValue);
     }
     private void GetSliderValue()
     {
         _sliderValue = GetComponentInParent<Slider>().value;
+    }
+
+    public void TurnOffMixer() 
+    {
+        _mixerGroup.audioMixer.SetFloat("OffIfDie", -80);
     }
 }

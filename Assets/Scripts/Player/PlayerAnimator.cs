@@ -31,6 +31,11 @@ public class PlayerAnimator : MonoBehaviour
         }
     }
 
+    public void Dodge()
+    {
+        _animator.SetTrigger("Dodge");
+    }
+
     private void UpdateVerticalAxis()
     {
         _animator.SetFloat("Y",_playerMovement._VerticalAxis);

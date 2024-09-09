@@ -15,6 +15,7 @@ public class UI : MonoBehaviour
     [SerializeField] private Text _armorCounter;
     [SerializeField] private GameObject _diamond;
     [SerializeField] private GameObject _dialog;
+    public GameObject _shop;
 
     private void Start()
     {
@@ -49,9 +50,21 @@ public class UI : MonoBehaviour
         _pausePanel.gameObject.SetActive(panelVisibility);
     }
 
-    public void ShowDiamond()
+    public void ShowDiamond(bool visible)
     { 
-        _diamond.SetActive(true); 
+        _diamond.SetActive(visible); 
+    }
+
+    public void ShowShop()
+    {
+        _shop.SetActive(true);
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
+    }
+
+    public void CloseShopCanvas()
+    {
+        _shop.SetActive(false);
     }
 
     public void ShowDialog(bool visible) 

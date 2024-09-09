@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerParamaters : AbstractCharacterParameters
 {
     [SerializeField] private UI _ui;
+    [SerializeField] private MuteMusic _music;
 
     private PlayerAnimator playerAnimator;
     private PlayerSounds sounds;
@@ -28,6 +29,7 @@ public class PlayerParamaters : AbstractCharacterParameters
             playerAnimator.DeathAnimation();
             GameOver.gameOver = true;
             _ui.GameOverPanel();
+            _music.Mute();
         }
         else
         {

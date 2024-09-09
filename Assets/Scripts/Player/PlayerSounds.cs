@@ -10,6 +10,8 @@ public class PlayerSounds : MonoBehaviour
     [SerializeField] private AudioClip _attack;
     [SerializeField] private AudioClip _armorHit;
     [SerializeField] private AudioClip _healingBottle;
+    [SerializeField] private AudioClip _ladder;
+    [SerializeField] private AudioClip _dodge;
 
     private AudioSource _audioSource;
 
@@ -27,6 +29,11 @@ public class PlayerSounds : MonoBehaviour
     public void PlayHealingBottleSound()
     {
         _audioSource.PlayOneShot(_healingBottle);
+    }
+
+    public void PlayDodgeSound()
+    {
+        _audioSource.PlayOneShot(_dodge);
     }
 
     public void PlayJumpSound()
@@ -52,6 +59,11 @@ public class PlayerSounds : MonoBehaviour
     public void PlayArmorHitSound()
     {
         _audioSource.PlayOneShot(_armorHit);
+    }
+
+    public void PlayLadderSound()
+    {
+        _audioSource.PlayOneShot(_ladder);
     }
 
     public void PlayAttackSound()

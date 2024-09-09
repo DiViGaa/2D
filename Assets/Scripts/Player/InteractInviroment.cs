@@ -12,7 +12,7 @@ public class InteractInviroment : MonoBehaviour
 
     private void Interact()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) && !InDialog.inDialog)
         {
             Collider2D[] interactableObjects = Physics2D.OverlapCircleAll(transform.position, _interactRange, _interactableLayer);
             foreach (var objects in interactableObjects)

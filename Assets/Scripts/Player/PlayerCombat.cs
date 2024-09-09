@@ -4,7 +4,6 @@ public class PlayerCombat : MonoBehaviour
 {
     [SerializeField] private float _attackRange = 0.5f;
     [SerializeField] private Transform _attackPoint;
-    [SerializeField] private LayerMask _enemyLayer;
     [SerializeField] private float _damage = 15;
 
     private PlayerAnimator _playerAnimator;
@@ -13,6 +12,8 @@ public class PlayerCombat : MonoBehaviour
     private float _nextAttackTime = 0f;
     private float _attackRate = 2f;
 
+    public LayerMask _enemyLayer;
+    
     void Start()
     {
         _playerMovement = GetComponentInChildren<PlayerMovement>();

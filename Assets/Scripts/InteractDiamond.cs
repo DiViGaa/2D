@@ -17,7 +17,7 @@ public class InteractDiamond : IntaractableObjects
     public override void Interact()
     {
         _diamonds._diamond++;
-        _uiDiamond.ShowDiamond();
+        _uiDiamond.ShowDiamond(true);
         _audioSource.PlayOneShot(_audioClip);
         Destroy(gameObject);
     }

@@ -1,43 +1,19 @@
 using UnityEngine;
 
-public class Shop : IntaractableObjects
+public class ShopButton : MonoBehaviour
 {
-    [SerializeField] private UI _ui;
-    [SerializeField] private Collectibles _collectibles;
     [SerializeField] private PlayerParamaters _playerParamaters;
+    [SerializeField] private Collectibles _collectibles;
     [SerializeField] private BuySound _buySound;
-    private Transform _playerTransform;
-    private bool _shopOpen = false;
+    [SerializeField] private UI _ui;
 
-    public override void Interact()
-    {
-        _shopOpen = true;
-        _ui.ShowShop();
-    }
-    
     private void Start()
     {
-        _playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         _buySound = GetComponent<BuySound>();
-    }
+        _ui = GameObject.FindGameObjectWithTag("UI").GetComponent<UI>();
+        _playerParamaters = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerParamaters>();
+        _collectibles = GameObject.FindGameObjectWithTag("Player").GetComponent<Collectibles>();
 
-    private void Update()
-    {
-        if (_shopOpen)
-            CloseShop();
-    }
-
-    private void CloseShop()
-    {
-        if (DistanceToPlayer() > 5)
-        {
-            _ui.CloseShopCanvas();
-            _shopOpen = false;
-        }
-    }
-    private float DistanceToPlayer()
-    {
-        return Vector2.Distance(gameObject.transform.position, _playerTransform.position);
     }
 
     public void BuyHealingBottle()

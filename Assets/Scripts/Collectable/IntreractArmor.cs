@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class IntreractArmor : IntaractableObjects
 {
-    [SerializeField] private int _armorIndex = 1;
+    [SerializeField] private int _amountOfArmor = 1;
     [SerializeField] private AudioClip _audioClip;
     private PlayerParamaters _playerArmor;
     private UI _armorCounter;
@@ -17,7 +17,7 @@ public class IntreractArmor : IntaractableObjects
 
     public override void Interact()
     {
-        _playerArmor._armor += _armorIndex;
+        _playerArmor._armor += _amountOfArmor;
         _armorCounter.UpdateArmorCounter();
         _audioSource.PlayOneShot(_audioClip);
         Destroy(gameObject);

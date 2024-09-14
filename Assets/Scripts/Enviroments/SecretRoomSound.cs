@@ -5,7 +5,7 @@ public class SecretRoomSound : MonoBehaviour
     [SerializeField] private AudioClip _hit;
     [SerializeField] private AudioClip _destroy;
 
-    [SerializeField] private AudioSource _audioSource;
+    private AudioSource _audioSource;
 
     void Start()
     {

@@ -5,19 +5,22 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float _ladderSpeed = 1.5f;
     [SerializeField] private Transform _checkLadder;
+    [SerializeField] private Transform _bottonCheckLadder;
     [SerializeField] private float _jumpForce = 15f;
     [SerializeField] private float _moveSpeed = 5f;
     [SerializeField] private PlayerSounds _sound;
 
     private PlayerAnimator _playerAnimator;
     private BoxCollider2D _boxCollider2D;
+    private PlayerCombat _playerCombat;
     private float _nextDodgeTime = 0f;
     private bool isDodging = false;
     private Rigidbody2D _rigidbody;
-    private PlayerCombat _playerCombat;
     private float _DodgeRate = 1f;
-    private bool checkedLadder;
+    public bool _checkedLadder;
+    public bool _bottonCheckedLadder;
     private bool wasGrounded;
+    private bool _onLadder;
 
     public SpriteRenderer _spriteRenderer;
     public float _HorizontalAxis;
@@ -47,6 +50,7 @@ public class PlayerMovement : MonoBehaviour
             MoveUpOnLadder();
             CheckingLadder();
             PlayLandingSound();
+            Ladder();
         }
     }
 
@@ -119,7 +123,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void MoveUpOnLadder()
     {
-        if (checkedLadder)
+        if (_onLadder)
         {
             _rigidbody.bodyType = RigidbodyType2D.Kinematic;
             UpDownLadder();
@@ -136,16 +140,62 @@ public class PlayerMovement : MonoBehaviour
         _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _VerticalAxis * _ladderSpeed);
     }
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawSphere(_checkLadder.position, 0.05f);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(_bottonCheckLadder.position, 0.05f);
+    }
+
     private void CheckingLadder()
     {
-        checkedLadder = Physics2D.OverlapPoint(_checkLadder.position, ladderLayer);
-        if (_VerticalAxis > 0 || _VerticalAxis < 0)
-            _playerAnimator.LadderAnimation(checkedLadder);
+        _checkedLadder = Physics2D.OverlapPoint(_checkLadder.position, ladderLayer);
+        _bottonCheckedLadder = Physics2D.OverlapPoint(_bottonCheckLadder.position, ladderLayer);
+    }
+
+
+    private void Ladder()
+    {
+        if (_checkedLadder || _bottonCheckedLadder)
+        {
+            if (!_checkedLadder && _bottonCheckedLadder)
+            {
+                if (_VerticalAxis > 0)
+                    _onLadder = false;
+
+                else if (_VerticalAxis < 0)
+                    _onLadder = true;
+            }
+            else if (_checkedLadder && _bottonCheckedLadder)
+            {
+                if (_VerticalAxis > 0)
+                    _onLadder = true;
+
+                else if (_VerticalAxis < 0)
+                    _onLadder = true;
+            }
+            else if (_checkedLadder && !_bottonCheckedLadder)
+            {
+                if (_VerticalAxis > 0)
+                    _onLadder = true;
+
+                else if (_VerticalAxis < 0)
+                    _onLadder = false;
+            }
+        }
+        else
+            _onLadder = false;
+
+        MoveUpOnLadder();
+
+        if (_VerticalAxis > 0 || _VerticalAxis < 0 || _VerticalAxis == 0)
+            _playerAnimator.LadderAnimation(_onLadder);
     }
 
     public bool IsGrounded()
     {
-        RaycastHit2D hit = Physics2D.BoxCast(_boxCollider2D.bounds.center,_boxCollider2D.bounds.size,0,Vector2.down, 0.2f, groundLayer);
+        RaycastHit2D hit = Physics2D.BoxCast(_boxCollider2D.bounds.center, _boxCollider2D.bounds.size, 0, Vector2.down, 0.2f, groundLayer);
         return hit.collider != null;
     }
 }

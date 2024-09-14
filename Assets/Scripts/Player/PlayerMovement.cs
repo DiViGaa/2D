@@ -75,7 +75,6 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator DodgeRoutine()
     {
-        isDodging = true;
         Collider2D[] enemyColliders = Physics2D.OverlapCircleAll(transform.position, 5f, _playerCombat._enemyLayer);
         foreach (var enemyCollider in enemyColliders)
             Physics2D.IgnoreCollision(_boxCollider2D, enemyCollider, true);
@@ -87,7 +86,6 @@ public class PlayerMovement : MonoBehaviour
 
         foreach (var enemyCollider in enemyColliders)
             Physics2D.IgnoreCollision(_boxCollider2D, enemyCollider, false);
-        isDodging = false;
     }
 
     private void Movement()

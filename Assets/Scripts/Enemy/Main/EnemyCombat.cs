@@ -24,22 +24,18 @@ public class EnemyCombat : MonoBehaviour
     public void Attack()
     {
         Collider2D[] hitEnemys = Physics2D.OverlapCircleAll(_attackPoint.position, _attackRange, _playerLayer);
+
         foreach (var enemy in hitEnemys)
-        {
             enemy.GetComponent<PlayerParamaters>().TakeDamage(_damage);
-        }
     }
 
     private void ReflectionPointAttack()
     {
         if (_spriteRenderer.flipX)
-        {
             _attackPoint.localPosition = -_attackPointPosition;
-        }
+
         else if (!_spriteRenderer.flipX)
-        {
             _attackPoint.localPosition = _attackPointPosition;
-        }
     }
 
     private void OnDrawGizmos()

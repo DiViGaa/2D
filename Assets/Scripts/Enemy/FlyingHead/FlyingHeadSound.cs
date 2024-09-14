@@ -5,7 +5,7 @@ public class FlyingHeadSound : MonoBehaviour
     [SerializeField] private AudioClip _laughter;
     [SerializeField] private AudioClip _death;
 
-    [SerializeField] private AudioSource _audioSource;
+    private AudioSource _audioSource;
 
     void Start()
     {

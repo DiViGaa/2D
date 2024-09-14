@@ -12,8 +12,8 @@ public class ChaceAndPatrol : StateMachineBehaviour
     private Transform _patrolPoint;
     private Transform _player;
     private Transform targetToMove;
+    private SpriteRenderer _spriteRenderer;
 
-    public SpriteRenderer _spriteRenderer;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -32,9 +32,8 @@ public class ChaceAndPatrol : StateMachineBehaviour
         
         var distanceToPlayer = DistanceToTarget(animator, _player);
 
-        if (DistanceToTarget(animator, _patrolPoint) <= 2) 
+        if (_patrolPoint.position.x == animator.gameObject.transform.position.x) 
         {
-
             animator.SetBool("MoveOrChase", false);
             animator.SetBool("Wait", true);
         }
@@ -53,14 +52,10 @@ public class ChaceAndPatrol : StateMachineBehaviour
         Flip(animator, targetToMove);
     }
 
-    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-
-    }
 
     private float DistanceToTarget(Animator animator, Transform target)
     {
-        return Vector2.Distance(animator.transform.position, target.position);
+        return (animator.transform.position - target.position).sqrMagnitude;
     }
 
     private void MoveToTarget(Transform target)
@@ -77,5 +72,9 @@ public class ChaceAndPatrol : StateMachineBehaviour
 
         else if(animator.transform.position.x < target.position.x)
             _spriteRenderer.flipX = false;
+    }
+    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+
     }
 }

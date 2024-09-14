@@ -5,7 +5,7 @@ public class WithcSound : MonoBehaviour
     [SerializeField] private AudioClip _step;
     [SerializeField] private AudioClip _death;
 
-    [SerializeField] private AudioSource _audioSource;
+    private AudioSource _audioSource;
 
     void Start()
     {

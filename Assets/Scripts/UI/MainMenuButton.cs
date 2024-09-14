@@ -5,7 +5,7 @@ public class MainMenuButton : MonoBehaviour
 {
     public void PlayButton()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("MainScene");
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }

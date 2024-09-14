@@ -65,6 +65,8 @@ public class UI : MonoBehaviour
     public void CloseShopCanvas()
     {
         _shop.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     public void ShowDialog(bool visible) 
@@ -74,7 +76,7 @@ public class UI : MonoBehaviour
 
     public void Restart()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("MainScene");
         PauseResume.CursorState(false, CursorLockMode.Locked);
     }
 

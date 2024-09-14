@@ -16,7 +16,7 @@ public class EnemySounds : MonoBehaviour
 
     public void PlayStepSound()
     {
-        _audioSource.pitch = Random.Range(0.95f, 1.05f);
+        _audioSource.pitch = RandomPithc(0.95f, 1.05f);
         _audioSource.PlayOneShot(_step);
     }
 
@@ -32,7 +32,12 @@ public class EnemySounds : MonoBehaviour
 
     public void PlayAttackSound()
     {
-        _audioSource.pitch = Random.Range(0.95f, 1.05f);
+        _audioSource.pitch = RandomPithc(0.95f, 1.05f);
         _audioSource.PlayOneShot(_attack);
+    }
+
+    private float RandomPithc(float min, float max)
+    {
+        return Random.Range(min, max);
     }
 }

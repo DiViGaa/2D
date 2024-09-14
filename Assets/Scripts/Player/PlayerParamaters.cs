@@ -28,7 +28,6 @@ public class PlayerParamaters : AbstractCharacterParameters
         {
             playerAnimator.DeathAnimation();
             GameOver.gameOver = true;
-            _ui.GameOverPanel();
             _music.Mute();
         }
         else

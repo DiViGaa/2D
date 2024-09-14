@@ -2,8 +2,10 @@ using UnityEngine;
 
 public class PlayerAnimator : MonoBehaviour
 {
-    [SerializeField] private Animator _animator;
-    [SerializeField] private PlayerMovement _playerMovement;
+    [SerializeField] private UI _ui;
+
+    private Animator _animator;
+    private PlayerMovement _playerMovement;
 
     private void Start()
     {
@@ -69,5 +71,10 @@ public class PlayerAnimator : MonoBehaviour
     private void isGrounded()
     {
         _animator.SetBool("isGrounded", _playerMovement.IsGrounded());
+    }
+
+    public void ShopGameOver()
+    {
+        _ui.GameOverPanel();
     }
 }

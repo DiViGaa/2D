@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class DamageFlyingHead : MonoBehaviour
+public class OneShotEnemyCombat : MonoBehaviour
 {
     [SerializeField] private float _damage = 30f;
 

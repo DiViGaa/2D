@@ -2,18 +2,18 @@ using UnityEngine;
 
 public class EnemyParameters : AbstractCharacterParameters
 {
-    private SkeletonAnimator _animator;
+    private EnemyAnimator _animator;
     private Reward _reward;
 
     private void Start()
     {
-        _animator = GetComponent<SkeletonAnimator>();
+        _animator = GetComponent<EnemyAnimator>();
         _reward = GetComponent<Reward>();
     }
     public override void TakeDamage(float damage)
     {
-        HP -= damage;
         _animator.TakeHitAnimation();
+        HP -= damage;
         CheckHP();
     } 
 
@@ -21,9 +21,9 @@ public class EnemyParameters : AbstractCharacterParameters
     {
         if (HP <= 0)
         {
-            _animator.DeathAnimation();
             GetComponent<Rigidbody2D>().gravityScale = 0f;
             GetComponent<Collider2D>().enabled = false;
+            _animator.DeathAnimation();
             _reward.CreateReward();
         }
     }

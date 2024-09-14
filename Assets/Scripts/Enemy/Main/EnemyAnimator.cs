@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class FlyingHeadAnimator : MonoBehaviour
+public class EnemyAnimator : MonoBehaviour
 {
     private Animator _animator;
 
-    void Start()
+    private void Start()
     {
         _animator = GetComponent<Animator>();
     }
@@ -12,5 +12,10 @@ public class FlyingHeadAnimator : MonoBehaviour
     public void DeathAnimation()
     {
         _animator.SetTrigger("Death");
+    }
+
+    public void TakeHitAnimation()
+    {
+        _animator.SetTrigger("Hit");
     }
 }

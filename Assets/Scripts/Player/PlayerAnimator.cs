@@ -4,25 +4,25 @@ public class PlayerAnimator : MonoBehaviour
 {
     [SerializeField] private UI _ui;
 
-    private Animator _animator;
     private PlayerMovement _playerMovement;
+    private Animator _animator;
 
     private void Start()
     {
-        _animator = GetComponent<Animator>();
         _playerMovement = GetComponent<PlayerMovement>();
+        _animator = GetComponent<Animator>();
     }
 
     private void Update()
     {
-        Move();
-        isGrounded();
         UpdateVerticalAxis();
+        IsGrounded();
+        Move();
     }
 
     private void Move()
     {
-        if (_playerMovement._HorizontalAxis != 0) 
+        if (_playerMovement.HorizontalAxis != 0) 
         {
             _animator.SetBool("Move", true);
         }
@@ -40,7 +40,7 @@ public class PlayerAnimator : MonoBehaviour
 
     private void UpdateVerticalAxis()
     {
-        _animator.SetFloat("Y",_playerMovement._VerticalAxis);
+        _animator.SetFloat("Y",_playerMovement.VerticalAxis);
     }
 
     public void JumpAnimation()
@@ -68,7 +68,7 @@ public class PlayerAnimator : MonoBehaviour
         _animator.SetBool("OnLadder", onLadder);
     }
 
-    private void isGrounded()
+    private void IsGrounded()
     {
         _animator.SetBool("isGrounded", _playerMovement.IsGrounded());
     }

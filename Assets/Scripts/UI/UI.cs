@@ -5,17 +5,17 @@ using UnityEngine.UI;
 public class UI : MonoBehaviour
 {
     [SerializeField] private PlayerParamaters _playerParamaters;
-    [SerializeField] private Collectibles _playerCoins;
-    [SerializeField] private Text _healingBottleText;
-    [SerializeField] private Slider _slider;
-    [SerializeField] private Text _coinsCounter;
-    [SerializeField] private GameObject _pausePanel;
+    [SerializeField] private Collectibles _collectibles;
     [SerializeField] private GameObject _gaveOverPanel;
-    [SerializeField] private PlayerParamaters _playerArmor;
-    [SerializeField] private Text _armorCounter;
+    [SerializeField] private Text _healingBottleText;
+    [SerializeField] private GameObject _pausePanel;
+    [SerializeField] private GameObject _interactLabel;
     [SerializeField] private GameObject _diamond;
+    [SerializeField] private Text _coinsCounter;
     [SerializeField] private GameObject _dialog;
-    public GameObject _shop;
+    [SerializeField] private Text _armorCounter;
+    [SerializeField] private GameObject _shop;
+    [SerializeField] private Slider _slider;
 
     private void Start()
     {
@@ -32,22 +32,22 @@ public class UI : MonoBehaviour
 
     public void UpdateHealingBottleCounter()
     {
-        _healingBottleText.text = _playerParamaters._healingBottle.ToString();
+        _healingBottleText.text = _collectibles._healingBottle.ToString();
     }
 
     public void UpdateCoinsCounter()
     {
-        _coinsCounter.text = _playerCoins._coins.ToString();
+        _coinsCounter.text = _collectibles._coins.ToString();
     }
 
     public void UpdateArmorCounter()
     {
-        _armorCounter.text = _playerArmor._armor.ToString();
+        _armorCounter.text = _collectibles._armor.ToString();
     }
 
     public void PausePanel(bool panelVisibility)
     {
-        _pausePanel.gameObject.SetActive(panelVisibility);
+        _pausePanel.SetActive(panelVisibility);
     }
 
     public void ShowDiamond(bool visible)
@@ -74,6 +74,11 @@ public class UI : MonoBehaviour
         _dialog.SetActive(visible);
     }
 
+    public void InteractLabel(bool visible)
+    {
+        _interactLabel.SetActive(visible);
+    }
+
     public void Restart()
     {
         SceneManager.LoadScene("MainScene");
@@ -88,7 +93,7 @@ public class UI : MonoBehaviour
 
     public void GameOverPanel()
     {
-        _gaveOverPanel.gameObject.SetActive(true);
+        _gaveOverPanel.SetActive(true);
         PauseResume.CursorState(true, CursorLockMode.Confined);
     }
 }

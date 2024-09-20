@@ -1,15 +1,15 @@
 using UnityEngine;
-using UnityEngine.Audio;
 
 public class PauseResume : MonoBehaviour
 {
     [SerializeField] private UI _gameUI;
+    [SerializeField] private InputManager _inputManager;
 
     private bool inPause;
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !GameOver.gameOver)
+        if (_inputManager.EscapeIsPressed() && !GameOver.gameOver && !CharacterIsBusy.characterIsBusy)
         {
             if (inPause)
             {

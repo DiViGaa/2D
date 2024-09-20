@@ -3,5 +3,5 @@ using UnityEngine;
 
 public class EnemyPatrolPoints : MonoBehaviour
 {
-    public List<Transform> points = new List<Transform>();
+    public List<Transform> points;
 }

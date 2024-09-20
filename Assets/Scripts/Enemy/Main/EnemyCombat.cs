@@ -32,20 +32,14 @@ public class EnemyCombat : MonoBehaviour
     private void ReflectionPointAttack()
     {
         if (_spriteRenderer.flipX)
-            _attackPoint.localPosition = -_attackPointPosition;
+            _attackPoint.localPosition = new Vector2(-_attackPointPosition.x, _attackPointPosition.y);
 
         else if (!_spriteRenderer.flipX)
-            _attackPoint.localPosition = _attackPointPosition;
+            _attackPoint.localPosition = new Vector2(_attackPointPosition.x, _attackPointPosition.y);
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(_attackPoint.position, _attackRange);
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Player")
-            collision.gameObject.GetComponent<PlayerParamaters>().TakeDamage(5);
     }
 }

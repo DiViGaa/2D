@@ -5,16 +5,16 @@ public class PlayerParamaters : AbstractCharacterParameters
     [SerializeField] private UI _ui;
     [SerializeField] private MuteMusic _music;
 
-    private PlayerAnimator playerAnimator;
-    private PlayerSounds sounds;
-
-    public int _healingBottle = 0;
-    public int _armor = 0;
+    private PlayerAnimator _playerAnimator;
+    private PlayerSounds _sounds;
+    private Collectibles _collectibles;
+  
 
     private void Start()
     {
-        playerAnimator = GetComponent<PlayerAnimator>();
-        sounds = GetComponent<PlayerSounds>();
+        _playerAnimator = GetComponent<PlayerAnimator>();
+        _sounds = GetComponent<PlayerSounds>();
+        _collectibles = GetComponent<Collectibles>();
         CheckHP();
     }
     private void Update()
@@ -26,7 +26,7 @@ public class PlayerParamaters : AbstractCharacterParameters
     {
         if (HP <= 0)
         {
-            playerAnimator.DeathAnimation();
+            _playerAnimator.DeathAnimation();
             GameOver.gameOver = true;
             _music.Mute();
         }
@@ -38,10 +38,10 @@ public class PlayerParamaters : AbstractCharacterParameters
 
     public override void TakeDamage(float damage)
     {
-        if (_armor > 0) 
+        if (_collectibles._armor > 0) 
         {
-            _armor--;
-            sounds.PlayArmorHitSound();
+            _collectibles.SetArmor(_collectibles._armor - 1);
+            _sounds.PlayArmorHitSound();
             _ui.UpdateArmorCounter();
         }
         else 
@@ -49,7 +49,7 @@ public class PlayerParamaters : AbstractCharacterParameters
             if(!GameOver.gameOver)
             {
                 HP -= damage;
-                playerAnimator.TakeHitAnimation();
+                _playerAnimator.TakeHitAnimation();
                 _ui.UpdateHealthBar();
                 CheckHP();
             }
@@ -58,14 +58,14 @@ public class PlayerParamaters : AbstractCharacterParameters
 
     public void RestoreHP()
     {
-        if (_healingBottle > 0 && Input.GetKeyDown(KeyCode.F))
+        if (_collectibles._healingBottle > 0 && Input.GetKeyDown(KeyCode.F))
         {
             HP += 15;
             HP = Mathf.Clamp(HP, 0, 100);
             _ui.UpdateHealthBar();
-            _healingBottle--;
+            _collectibles.SetHealingBottle(_collectibles._healingBottle - 1);
             _ui.UpdateHealingBottleCounter();
-            sounds.PlayHealingBottleSound();
+            _sounds.PlayHealingBottleSound();
         }
     }
 }

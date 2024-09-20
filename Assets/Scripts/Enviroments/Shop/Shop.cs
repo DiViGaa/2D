@@ -11,6 +11,7 @@ public class Shop : IntaractableObjects
     public override void Interact()
     {
         _shopOpen = true;
+        CharacterIsBusy.characterIsBusy = true;
         _ui.ShowShop();
     }
     
@@ -31,6 +32,7 @@ public class Shop : IntaractableObjects
         {
             _ui.CloseShopCanvas();
             _shopOpen = false;
+            CharacterIsBusy.characterIsBusy = false;
         }
     }
     private float DistanceToPlayer()

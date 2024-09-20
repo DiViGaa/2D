@@ -1,12 +1,12 @@
 using UnityEngine;
 
-public class WithcTrigger : MonoBehaviour
+public class BossTrigger : MonoBehaviour
 {
-    [SerializeField] private GameObject _withc;
+    [SerializeField] private GameObject _boss;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
-            _withc.SetActive(true);
-            
+            _boss.SetActive(true);
+
     }
 }

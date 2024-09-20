@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class ShopButton : MonoBehaviour
 {
-    [SerializeField] private PlayerParamaters _playerParamaters;
     [SerializeField] private Collectibles _collectibles;
     [SerializeField] private BuySound _buySound;
     [SerializeField] private UI _ui;
@@ -11,7 +10,6 @@ public class ShopButton : MonoBehaviour
     {
         _buySound = GetComponent<BuySound>();
         _ui = GameObject.FindGameObjectWithTag("UI").GetComponent<UI>();
-        _playerParamaters = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerParamaters>();
         _collectibles = GameObject.FindGameObjectWithTag("Player").GetComponent<Collectibles>();
 
     }
@@ -20,9 +18,9 @@ public class ShopButton : MonoBehaviour
     {
         if (_collectibles._coins >= 1)
         {
-            _collectibles._coins--;
+            _collectibles.SetCoin(_collectibles._coins - 1);
             _ui.UpdateCoinsCounter();
-            _playerParamaters._healingBottle++;
+            _collectibles.SetHealingBottle(_collectibles._healingBottle + 1);
             _ui.UpdateHealingBottleCounter();
             _buySound.PlayBuySound();
         }
@@ -32,9 +30,9 @@ public class ShopButton : MonoBehaviour
     {
         if (_collectibles._coins >= 2)
         {
-            _collectibles._coins -= 2;
+            _collectibles.SetCoin(_collectibles._coins - 2);
             _ui.UpdateCoinsCounter();
-            _playerParamaters._armor++;
+            _collectibles.SetArmor(_collectibles._armor + 1);
             _ui.UpdateArmorCounter();
             _buySound.PlayBuySound();
         }

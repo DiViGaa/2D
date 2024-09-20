@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChaceAndPatrol : StateMachineBehaviour
+public class EnemyMovement : StateMachineBehaviour
 {
-    [SerializeField] private float _distanceToChase = 5f;
+    //[SerializeField] private float _distanceToChase = 5f;
     [SerializeField] private float _movementSpeed = 1.5f;
     [SerializeField] private float _attackDistance = 2f;
     
@@ -26,7 +26,6 @@ public class ChaceAndPatrol : StateMachineBehaviour
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-
         MoveToTarget(_patrolPoint);
         targetToMove = _patrolPoint;
         
@@ -38,15 +37,16 @@ public class ChaceAndPatrol : StateMachineBehaviour
             animator.SetBool("Wait", true);
         }
 
-        if (distanceToPlayer <= _distanceToChase)
-        {
-            MoveToTarget(_player);
-            targetToMove = _player;
-        }
+        //if (distanceToPlayer <= _distanceToChase)
+        //{
+        //    MoveToTarget(_player);
+        //    targetToMove = _player;
+        //}
 
         if (distanceToPlayer <= _attackDistance)
         {
             animator.SetTrigger("Attack");
+            targetToMove = _player;
         }
 
         Flip(animator, targetToMove);
@@ -73,6 +73,7 @@ public class ChaceAndPatrol : StateMachineBehaviour
         else if(animator.transform.position.x < target.position.x)
             _spriteRenderer.flipX = false;
     }
+
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
 

@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PlayerCombat : MonoBehaviour
 {
+    [SerializeField] private InputManager _inputManager;
     [SerializeField] private float _attackRange = 0.5f;
     [SerializeField] private Transform _attackPoint;
     [SerializeField] private float _damage = 15;
@@ -34,39 +35,41 @@ public class PlayerCombat : MonoBehaviour
     {
         if (CanAttack())
         {
-            _nextAttackTime = Time.time + 1f / _attackRate;
             _playerAnimator.AttackAnimation();
-            Collider2D[] hitEnemys = Physics2D.OverlapCircleAll(_attackPoint.position, _attackRange, _enemyLayer);
-            foreach (var enemy in hitEnemys)
+        }
+    }
+
+    public void AttackEvent()
+    {
+        _nextAttackTime = Time.time + 1f / _attackRate;
+        Collider2D[] hitEnemys = Physics2D.OverlapCircleAll(_attackPoint.position, _attackRange, _enemyLayer);
+        foreach (var enemy in hitEnemys)
+        {
+            enemy.GetComponent<AbstractCharacterParameters>().TakeDamage(_damage);
+            if (enemy != null && enemy.isTrigger)
             {
                 enemy.GetComponent<AbstractCharacterParameters>().TakeDamage(_damage);
-                if (enemy != null && enemy.isTrigger)
-                {
-                    enemy.GetComponent<AbstractCharacterParameters>().TakeDamage(_damage);
-                }
             }
         }
     }
 
     private bool CanAttack()
     {
-        return Input.GetButtonDown("Fire1") && _playerMovement.IsGrounded() && Time.time >= _nextAttackTime;
+        return _inputManager.AttackButtonIsPressed() && _playerMovement.IsGrounded() && Time.time >= _nextAttackTime && !CharacterIsBusy.characterIsBusy;
     }
 
 
     private void ReflectionPointAttack()
     {
-        if (_playerMovement._spriteRenderer.flipX) 
-        {
+        if (_playerMovement.spriteRenderer.flipX) 
             _attackPoint.localPosition = -_attackPointPosition; 
-        }
-        else if (!_playerMovement._spriteRenderer.flipX)
-        {
+
+        else if (!_playerMovement.spriteRenderer.flipX)
             _attackPoint.localPosition = _attackPointPosition;
-        }
     }
     private void OnDrawGizmos()
     {
+        Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(_attackPoint.position, _attackRange);
     }
 }

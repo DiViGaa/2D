@@ -6,6 +6,7 @@ public class EnemySounds : MonoBehaviour
     [SerializeField] private AudioClip _damage;
     [SerializeField] private AudioClip _death;
     [SerializeField] private AudioClip _attack;
+    [SerializeField] private AudioClip _idle;
 
     private AudioSource _audioSource;
 
@@ -34,6 +35,11 @@ public class EnemySounds : MonoBehaviour
     {
         _audioSource.pitch = RandomPithc(0.95f, 1.05f);
         _audioSource.PlayOneShot(_attack);
+    }
+    public void PlayIdleSound()
+    {
+        _audioSource.pitch = RandomPithc(0.95f, 1.05f);
+        _audioSource.PlayOneShot(_idle);
     }
 
     private float RandomPithc(float min, float max)

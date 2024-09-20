@@ -2,8 +2,10 @@ using UnityEngine;
 
 public class InteractInviroment : MonoBehaviour
 {
-    [SerializeField] private float _interactRange = 5f;
     [SerializeField] private LayerMask _interactableLayer;
+    [SerializeField] private InputManager _inputManager;
+    [SerializeField] private float _interactRange = 5f;
+    [SerializeField] private UI _ui;
 
     void Update()
     {
@@ -12,9 +14,16 @@ public class InteractInviroment : MonoBehaviour
 
     private void Interact()
     {
-        if (Input.GetKeyDown(KeyCode.E) && !InDialog.inDialog)
+        Collider2D[] interactableObjects = Physics2D.OverlapCircleAll(transform.position, _interactRange, _interactableLayer);
+
+        if (interactableObjects.Length > 0 && !CharacterIsBusy.characterIsBusy)
+            _ui.InteractLabel(true);
+
+        else
+            _ui.InteractLabel(false);
+
+        if (_inputManager.EIsPressed() && !CharacterIsBusy.characterIsBusy)
         {
-            Collider2D[] interactableObjects = Physics2D.OverlapCircleAll(transform.position, _interactRange, _interactableLayer);
             foreach (var objects in interactableObjects)
             {
                 objects.GetComponent<IntaractableObjects>().Interact();
@@ -24,6 +33,7 @@ public class InteractInviroment : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, _interactRange);
     }
 }

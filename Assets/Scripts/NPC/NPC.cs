@@ -3,10 +3,11 @@ using UnityEngine.UI;
 
 public class NPC : IntaractableObjects
 {
-    [SerializeField] private Collectibles _collectales;
+    [SerializeField] private float _distanceToCloseDialog = 5;
+    [SerializeField] private Collectibles _collectibles;
+    [SerializeField] private InputManager _inputManager;
     [SerializeField] private Sprite[] _dealoguePartOne;
     [SerializeField] private Sprite[] _dealoguePartTwo;
-    [SerializeField] private float _distanceToCloseDialog = 5;
     [SerializeField] private NPCSound _npsSound;
     [SerializeField] private Image _image;
     [SerializeField] private UI _ui;
@@ -20,26 +21,29 @@ public class NPC : IntaractableObjects
     private void Start()
     {
         _playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-        _collectales = _playerTransform.GetComponent<Collectibles>();
+        _collectibles = _playerTransform.GetComponent<Collectibles>();
         _npsSound = GetComponent<NPCSound>();
     }
 
     private void Update()
     {
-        CloseDialoge();
-        ScrollDialog();
+        if (_isTalking)
+        {
+            CloseDialoge();
+            ScrollDialog();
+        }    
     }
 
     public override void Interact()
     {
+        Debug.Log("Pedro");
         if (_isTalking) return;
-
         _ui.ShowDialog(true);
-        InDialog.inDialog = true;
+        CharacterIsBusy.characterIsBusy = true;
         _isTalking = true;
         _index = -1;
 
-        if (_collectales._diamond >= 1 && _partOneCompleted)
+        if (_collectibles._diamond >= 1 && _partOneCompleted)
         {
             _image.sprite = _dealoguePartTwo[0];
         }
@@ -51,11 +55,12 @@ public class NPC : IntaractableObjects
 
     private void ScrollDialog()
     {
-        if (Input.GetKeyDown(KeyCode.E) && InDialog.inDialog)
+        if (_inputManager.EIsPressed() && _isTalking)
         {
+            Debug.Log("Hello");
             _index++;
 
-            if (_collectales._diamond < 1 || !_partOneCompleted)
+            if (_collectibles._diamond < 1 || !_partOneCompleted)
             {
                 if (_index < _dealoguePartOne.Length)
                 {
@@ -66,7 +71,7 @@ public class NPC : IntaractableObjects
                     _partOneCompleted = true;
                 }
             }
-            else if (_collectales._diamond >= 1 && _partOneCompleted)
+            else if (_collectibles._diamond >= 1 && _partOneCompleted)
             {
                 if (_index < _dealoguePartTwo.Length)
                 {
@@ -76,8 +81,8 @@ public class NPC : IntaractableObjects
                 {
                     GetComponent<Reward>().CreateReward();
                     Destroy(GetComponent<BoxCollider2D>());
-                    InDialog.inDialog = false;
-                    _collectales._diamond--;
+                    CharacterIsBusy.characterIsBusy = false;
+                    _collectibles.SetDiamond(_collectibles._diamond - 1);
                     _npsSound.PlayerRewardSound();
                     _ui.ShowDiamond(false);
                     _ui.ShowDialog(false);
@@ -91,13 +96,13 @@ public class NPC : IntaractableObjects
     {
         bool allPartOneDialogCompleted = _index >= _dealoguePartOne.Length;
         bool allPartTwoDialogCompleted = _index >= _dealoguePartTwo.Length;
-        bool hasDiamond = _collectales._diamond >= 1;
+        bool hasDiamond = _collectibles._diamond >= 1;
         bool playerTooFar = DistanceToPlayer() > _distanceToCloseDialog;
 
         if (playerTooFar || (allPartOneDialogCompleted && !hasDiamond) || (allPartTwoDialogCompleted && hasDiamond && _partOneCompleted))
         {
             _ui.ShowDialog(false);
-            InDialog.inDialog = false;
+            CharacterIsBusy.characterIsBusy = false;
             _isTalking = false;
         }
     }

@@ -4,14 +4,17 @@ public class PlayerParamaters : AbstractCharacterParameters
 {
     [SerializeField] private UI _ui;
     [SerializeField] private MuteMusic _music;
-
+    
     private PlayerAnimator _playerAnimator;
     private PlayerSounds _sounds;
     private Collectibles _collectibles;
+    private ISaveSystem _saveSystem;
+    private SaveData _myData;
   
 
     private void Start()
     {
+        Init();
         _playerAnimator = GetComponent<PlayerAnimator>();
         _sounds = GetComponent<PlayerSounds>();
         _collectibles = GetComponent<Collectibles>();
@@ -67,5 +70,14 @@ public class PlayerParamaters : AbstractCharacterParameters
             _ui.UpdateHealingBottleCounter();
             _sounds.PlayHealingBottleSound();
         }
+    }
+
+    private void Init()
+    {
+        _saveSystem = new JsonSaveSystem();
+        _myData = _saveSystem.Load();
+        HP = _myData.player.hp;
+        _ui.UpdateHealthBar();
+        transform.position = _myData.player.playerPosition;
     }
 }

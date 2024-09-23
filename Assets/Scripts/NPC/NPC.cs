@@ -8,6 +8,7 @@ public class NPC : IntaractableObjects
     [SerializeField] private InputManager _inputManager;
     [SerializeField] private Sprite[] _dealoguePartOne;
     [SerializeField] private Sprite[] _dealoguePartTwo;
+    [SerializeField] private QuestData _questData;
     [SerializeField] private NPCSound _npsSound;
     [SerializeField] private Image _image;
     [SerializeField] private UI _ui;
@@ -20,6 +21,7 @@ public class NPC : IntaractableObjects
 
     private void Start()
     {
+        _questData = GetComponent<QuestData>();
         _playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         _collectibles = _playerTransform.GetComponent<Collectibles>();
         _npsSound = GetComponent<NPCSound>();
@@ -36,7 +38,6 @@ public class NPC : IntaractableObjects
 
     public override void Interact()
     {
-        Debug.Log("Pedro");
         if (_isTalking) return;
         _ui.ShowDialog(true);
         CharacterIsBusy.characterIsBusy = true;
@@ -57,7 +58,6 @@ public class NPC : IntaractableObjects
     {
         if (_inputManager.EIsPressed() && _isTalking)
         {
-            Debug.Log("Hello");
             _index++;
 
             if (_collectibles._diamond < 1 || !_partOneCompleted)
@@ -79,6 +79,7 @@ public class NPC : IntaractableObjects
                 }
                 else
                 {
+                    _questData.state = true;
                     GetComponent<Reward>().CreateReward();
                     Destroy(GetComponent<BoxCollider2D>());
                     CharacterIsBusy.characterIsBusy = false;

@@ -1,3 +1,4 @@
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -17,8 +18,12 @@ public class UI : MonoBehaviour
     [SerializeField] private GameObject _shop;
     [SerializeField] private Slider _slider;
 
+    private ISaveSystem _saveSystem;
+    private SaveData _myData;
+
     private void Start()
     {
+        _saveSystem = new JsonSaveSystem();
         UpdateHealingBottleCounter();
         UpdateArmorCounter();
         UpdateCoinsCounter();
@@ -81,8 +86,17 @@ public class UI : MonoBehaviour
 
     public void Restart()
     {
-        SceneManager.LoadScene("MainScene");
-        PauseResume.CursorState(false, CursorLockMode.Locked);
+        if (File.Exists(Application.persistentDataPath + "/Save.json"))
+        {
+            _myData = _saveSystem.Load();
+            SceneManager.LoadScene(_myData.sceneName.sceneName);
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        else 
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 
     public void BackToMenu()

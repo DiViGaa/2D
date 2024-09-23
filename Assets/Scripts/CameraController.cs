@@ -4,10 +4,14 @@ public class CameraController : MonoBehaviour
 {
     private Transform _player;
     private Vector3 _position;
+    private ISaveSystem _saveSystem;
+    private SaveData _myData;
 
     private void Start()
     {
+        _saveSystem = new JsonSaveSystem();
         _player = GameObject.FindGameObjectWithTag("Player").transform;
+        Init();
         
     }
     
@@ -17,5 +21,11 @@ public class CameraController : MonoBehaviour
         _position.z = -10f;
         transform.position = Vector3.Lerp(transform.position,_position, Time.deltaTime);
 
+    }
+
+    private void Init()
+    {
+        _myData = _saveSystem.Load();
+        transform.position = _myData.cameraPos.cameraPosition;
     }
 }

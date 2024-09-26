@@ -11,7 +11,7 @@ public class InteractInviroment : MonoBehaviour
     {
         Interact();
     }
-
+    
     private void Interact()
     {
         Collider2D[] interactableObjects = Physics2D.OverlapCircleAll(transform.position, _interactRange, _interactableLayer);

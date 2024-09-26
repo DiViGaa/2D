@@ -6,6 +6,7 @@ public class CameraController : MonoBehaviour
     private Vector3 _position;
     private ISaveSystem _saveSystem;
     private SaveData _myData;
+    [SerializeField] private float _cameraSpeed = 5f;
 
     private void Start()
     {
@@ -19,7 +20,7 @@ public class CameraController : MonoBehaviour
     {
         _position = _player.position - new Vector3(0,-4,0);
         _position.z = -10f;
-        transform.position = Vector3.Lerp(transform.position,_position, Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position,_position,_cameraSpeed * Time.deltaTime);
 
     }
 

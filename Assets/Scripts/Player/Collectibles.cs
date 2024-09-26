@@ -11,7 +11,7 @@ public class Collectibles : MonoBehaviour
     {
         Init();
     }
-
+    
     public int _coins {  get; private set; }
     public int _diamond { get; private set; }
 

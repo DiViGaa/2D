@@ -43,10 +43,10 @@ public class BossMov : StateMachineBehaviour
 
     private void Flip(Animator animator)
     {
-        if (animator.transform.position.x > _player.position.x)
+        if (animator.transform.position.x < _player.position.x)
             _spriteRenderer.flipX = true;
 
-        else if (animator.transform.position.x < _player.position.x)
+        else if (animator.transform.position.x > _player.position.x)
             _spriteRenderer.flipX = false;
     }
 

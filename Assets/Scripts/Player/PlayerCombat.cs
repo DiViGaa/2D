@@ -11,7 +11,7 @@ public class PlayerCombat : MonoBehaviour
     private PlayerMovement _playerMovement;
     private  Vector2 _attackPointPosition;
     private float _nextAttackTime = 0f;
-    private float _attackRate = 2f;
+    [SerializeField] private float _attackRate = 2f;
 
     public LayerMask _enemyLayer;
     

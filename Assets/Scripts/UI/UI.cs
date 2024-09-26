@@ -18,6 +18,10 @@ public class UI : MonoBehaviour
     [SerializeField] private GameObject _shop;
     [SerializeField] private Slider _slider;
 
+    [SerializeField] private BossParamaters _bossParamaters;
+    [SerializeField] private GameObject _bossHpBar;
+    [SerializeField] private Slider _bossHpBarSlider;
+
     private ISaveSystem _saveSystem;
     private SaveData _myData;
 
@@ -33,6 +37,16 @@ public class UI : MonoBehaviour
     public void UpdateHealthBar()
     {
         _slider.value = _playerParamaters.HP;
+    }
+
+    public void UpdateBossHealthBar()
+    {
+        _bossHpBarSlider.value = _bossParamaters.HP;
+    }
+
+    public void BossHealthBar(bool Visibility)
+    {
+        _bossHpBar.SetActive(Visibility);
     }
 
     public void UpdateHealingBottleCounter()

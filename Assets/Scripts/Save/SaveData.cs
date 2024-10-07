@@ -35,6 +35,8 @@ public class CollectablesItem
     public int coins;
     public int diamond;
     public bool theDiamondWasRaised;
+    public int bossDiamond;
+    public bool theBossDiamondWasRaised;
 }
 
 [Serializable]

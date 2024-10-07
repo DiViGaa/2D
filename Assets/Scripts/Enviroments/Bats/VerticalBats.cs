@@ -1,13 +1,14 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class VerticalBats : MonoBehaviour
 {
-    [SerializeField] private GameObject bat;
+    [SerializeField] private GameObject _bat;
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            bat.SetActive(true);
+            _bat.SetActive(true);
             Destroy(gameObject);
         }
     }

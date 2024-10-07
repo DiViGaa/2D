@@ -35,6 +35,8 @@ public class InteractSave : IntaractableObjects
         _myData.collectablesItem.coins = _collectables._coins;
         _myData.collectablesItem.diamond = _collectables._diamond;
         _myData.collectablesItem.theDiamondWasRaised = _collectables.theDiamondWasRaised;
+        _myData.collectablesItem.bossDiamond = _collectables._bossDiamond;
+        _myData.collectablesItem.theBossDiamondWasRaised = _collectables.theBossDiamondWasRaised;
 
         foreach (var enemyData in _enemySaveLoad.enemies)
         {

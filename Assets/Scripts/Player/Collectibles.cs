@@ -6,6 +6,7 @@ public class Collectibles : MonoBehaviour
     private ISaveSystem _saveSystem;
     private SaveData _myData;
     public bool theDiamondWasRaised = false;
+    public bool theBossDiamondWasRaised = false;
 
     private void Start()
     {
@@ -14,6 +15,8 @@ public class Collectibles : MonoBehaviour
     
     public int _coins {  get; private set; }
     public int _diamond { get; private set; }
+    
+    public int _bossDiamond { get; private set; }
 
     public int _healingBottle {  get; private set; }
 
@@ -27,6 +30,11 @@ public class Collectibles : MonoBehaviour
     {
         _diamond = amount;
         theDiamondWasRaised = true;
+    }
+    public void SetBossDiamond(int amount)
+    {
+        _bossDiamond = amount;
+        theBossDiamondWasRaised = true;
     }
     public void SetHealingBottle(int amount)
     {
@@ -46,9 +54,12 @@ public class Collectibles : MonoBehaviour
         _healingBottle = _myData.collectablesItem.healingBottle;
         _armor = _myData.collectablesItem.armor;
         _diamond = _myData.collectablesItem.diamond;
+        _bossDiamond = _myData.collectablesItem.bossDiamond;
+        theBossDiamondWasRaised = _myData.collectablesItem.theBossDiamondWasRaised;
         _uI.UpdateArmorCounter();
         _uI.UpdateCoinsCounter();
         _uI.UpdateHealingBottleCounter();
         _uI.ShowDiamond(_myData.collectablesItem.diamond > 0);
+        _uI.ShowBossDiamond(_myData.collectablesItem.bossDiamond > 0);
     }
 }

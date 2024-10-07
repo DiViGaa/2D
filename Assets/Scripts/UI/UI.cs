@@ -12,12 +12,13 @@ public class UI : MonoBehaviour
     [SerializeField] private GameObject _pausePanel;
     [SerializeField] private GameObject _interactLabel;
     [SerializeField] private GameObject _diamond;
+    [SerializeField] private GameObject _bossDiamond;
     [SerializeField] private Text _coinsCounter;
     [SerializeField] private GameObject _dialog;
     [SerializeField] private Text _armorCounter;
     [SerializeField] private GameObject _shop;
+    [SerializeField] private GameObject _dialogCanvas;
     [SerializeField] private Slider _slider;
-
     [SerializeField] private BossParamaters _bossParamaters;
     [SerializeField] private GameObject _bossHpBar;
     [SerializeField] private Slider _bossHpBarSlider;
@@ -69,19 +70,29 @@ public class UI : MonoBehaviour
         _pausePanel.SetActive(panelVisibility);
     }
 
+    public void DialogShop(bool dialogVisibility)
+    {
+        _dialogCanvas.SetActive(dialogVisibility);
+    }
+    
     public void ShowDiamond(bool visible)
     { 
         _diamond.SetActive(visible); 
     }
+    
+    public void ShowBossDiamond(bool visible)
+    { 
+        _bossDiamond.SetActive(visible); 
+    }
 
-    public void ShowShop()
+    public void ShowShopCanvas()
     {
         _shop.SetActive(true);
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
     }
 
-    public void CloseShopCanvas()
+    public void HideShopCanvas()
     {
         _shop.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;

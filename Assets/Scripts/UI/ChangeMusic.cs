@@ -6,28 +6,28 @@ public class ChangeMusic : MonoBehaviour
     [SerializeField] private AudioClip _bossTheme;
     private AudioClip _mainTheme;
 
-    private AudioSource audioSource;
+    private AudioSource _audioSource;
 
     private void Start()
     {
-        audioSource = GetComponent<AudioSource>();
-        _mainTheme = audioSource.clip;
+        _audioSource = GetComponent<AudioSource>();
+        _mainTheme = _audioSource.clip;
     }
     
     public void ChangeToMainTheme()
     {
-        audioSource.clip = _mainTheme;
-        audioSource.Play();
+        _audioSource.clip = _mainTheme;
+        _audioSource.Play();
     }
 
     public void ChangeToBossTheme()
     {
-        audioSource.clip = _bossTheme;
-        audioSource.Play();
+        _audioSource.clip = _bossTheme;
+        _audioSource.Play();
     }
 
     public void ChangeVolume()
     {
-        audioSource.volume = Mathf.MoveTowards(0, 0.1f , Time.deltaTime * 2);
+        _audioSource.volume = Mathf.MoveTowards(0, 0.1f , Time.deltaTime * 2);
     }
 }

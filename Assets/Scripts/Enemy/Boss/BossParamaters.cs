@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 
 public class BossParamaters : AbstractCharacterParameters
 {
+    [SerializeField] private ChangeMusic _changeMusic;
     [SerializeField] private UI _ui;
     private EnemyAnimator _animator;
     private Reward _reward;
@@ -35,5 +37,10 @@ public class BossParamaters : AbstractCharacterParameters
     {
         Destroy(gameObject);
     }
-        
+
+    private void OnDestroy()
+    {
+        _changeMusic.ChangeVolume();
+        _changeMusic.ChangeToMainTheme();
+    }
 }
